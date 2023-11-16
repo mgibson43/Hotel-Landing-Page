@@ -1,5 +1,6 @@
 package edu.wgu.d387_sample_code;
 
+import edu.wgu.d387_sample_code.entity.LanguageType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.io.ClassPathResource;
@@ -10,15 +11,16 @@ import java.util.Properties;
 
 @Getter
 @Setter
-public class LanguageThread implements Runnable {
+public class LanguageThread extends Thread {
 
-    private String language;
+    private LanguageType language;
     private String resourcePath;
+    private InputStream stream;
 
-    public LanguageThread(String language) {
+    public LanguageThread(LanguageType language) {
         this.language = language;
 
-        if (this.language.equals("en")) {
+        if (this.language == LanguageType.EN) {
             this.resourcePath = "welcome_en_US.properties";
         }
         else {
@@ -31,7 +33,7 @@ public class LanguageThread implements Runnable {
 
         Properties properties = new Properties();
         try {
-            InputStream stream = new ClassPathResource(this.resourcePath).getInputStream();
+            this.stream = new ClassPathResource(this.resourcePath).getInputStream();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
