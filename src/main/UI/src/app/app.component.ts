@@ -11,7 +11,7 @@ import {map} from "rxjs/operators";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css', '../styles.css']
 })
 export class AppComponent implements OnInit{
 
@@ -21,12 +21,18 @@ export class AppComponent implements OnInit{
 
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
+  private welcomeUrl:string = this.baseURL + '/api/welcome';
   public submitted!:boolean;
   roomsearch! : FormGroup;
   rooms! : Room[];
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  welcomeMessages!:string[];
+
+  getWelcome(): Observable<string> {
+    return this.httpClient.get(this.welcomeUrl,{responseType:'text'});
+  }
 
     ngOnInit(){
       this.roomsearch= new FormGroup({
@@ -44,7 +50,14 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+
+    this.getWelcome().subscribe(
+      (response) => {
+        this.welcomeMessages = JSON.parse(response);
+      }
+    )
   }
+
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
       this.getAll().subscribe(

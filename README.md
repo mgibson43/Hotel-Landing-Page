@@ -7,6 +7,21 @@
 - resources: added Resource Bundle 'welcome' with files for US English and Canadian French
 - welcome_en_US.properties - line 1: added welcome property
 - welcome_fr_CA.properties - line 1: added welcome property
-- edu.wgu.d387_sample_code: created LanguageThread.java class
-- LanguageThread.java - lines 20-28: creates an input stream based on LanguageType given
-- edu.wgu.d387_sample_code.entity: created LanguageType enum with EN and FR languages
+<br><br>
+- edu.wgu.d387_sample_code: created d387 package
+- d387: created WelcomeService.java interface with method for converting a String array to json
+- d387: created WelcomeServiceImpl.java to implement WelcomeService and extend Thread
+- WelcomeServiceImpl.java - lines 30-53: create 2 threads to retrieve welcome messages from resource bundles
+<br><br>
+- d387: created WelcomeController.java to create a get mapping to retrieve the welcome data
+- WelcomeController.java - lines 18-21: inject WelcomeService into the WelcomeController and start the threads
+- WelcomeController.java - lines 23-27: return the json data to the get mapping
+<br><br>
+- ApiConfig.java - lines 21-25: added Cors mapping for http://localhost:4200 and allowed GET and POST methods
+<br><br>
+- app.component.ts - line 24: added string to hold the url for the welcome get mapping
+- app.component.ts - line 31: added string array to hold the data passed from the get request
+- app.component.ts - lines 33-35: added method to return the data from the get request
+- app.component.ts - line 54-58: parse json string from get request into a javascript array
+<br><br>
+- app.component.html - line 19: use *ngFor to iterate through messages array and display each message
