@@ -17,8 +17,8 @@ import static java.util.concurrent.Executors.newFixedThreadPool;
 @Service
 public class WelcomeServiceImpl extends Thread implements WelcomeService {
 
-    private List<String> messages = new ArrayList<>();
-    private final ExecutorService executer = newFixedThreadPool(2);
+    private List<String> messages;
+    private ExecutorService executer = newFixedThreadPool(2);
 
     @Override
     public String getJsonList() throws JsonProcessingException {
@@ -27,10 +27,16 @@ public class WelcomeServiceImpl extends Thread implements WelcomeService {
         return mapper.writeValueAsString(this.messages);
     }
 
+    public void startService() {
+
+        Thread thread = new Thread(this);
+        thread.start();
+    }
+
     public void run() {
 
         Properties properties = new Properties();
-
+        this.messages = new ArrayList<>();
         executer.execute(() -> {
             try {
                 InputStream stream = new ClassPathResource("welcome_en_US.properties").getInputStream();

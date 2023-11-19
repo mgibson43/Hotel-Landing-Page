@@ -11,7 +11,8 @@
 - edu.wgu.d387_sample_code: created d387 package
 - d387: created WelcomeService.java interface with method for converting a String array to json
 - d387: created WelcomeServiceImpl.java to implement WelcomeService and extend Thread
-- WelcomeServiceImpl.java - lines 30-53: create 2 threads to retrieve welcome messages from resource bundles
+- WelcomeServiceImpl.java - lines 36-58: create 2 threads to retrieve welcome messages from resource bundles
+- WelcomeServiceImpl.java - lines 30-34: as a buffer service to prevent an IllegalThreadStateException
 <br><br>
 - d387: created WelcomeController.java to create a get mapping to retrieve the welcome data
 - WelcomeController.java - lines 18-21: inject WelcomeService into the WelcomeController and start the threads
