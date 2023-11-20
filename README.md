@@ -29,3 +29,16 @@
 
 ### Task B2
 - app.component.html - lines 81-82: added prices in Canadian dollars and Euros
+
+### Task B3
+- edu.wgu.d387_sample_code.converter: created TimeZoneService and TimeZoneServiceImpl
+- edu.wgu.d387_sample_code.rest: created TimeZoneController
+<br><br>
+- TimeZoneServiceImpl.java - lines 25-41: create ZonedDateTime objects and add them to a list
+- TimeZoneServiceImpl.java - lines 44-49: convert the list of ZonedDateTime objects to JSON
+<br><br>
+- TimeZoneController.java - lines 17-20: inject TimeZoneService into the controller
+- TimeZoneController.java - lines 23-27: pass JSON of date times to front end through get mapping
+<br><br>
+- app.component.ts - lines 39-41: retrieve date time data from GET method
+- app.component.ts - lines 66-70: subscribe time zone data to string array

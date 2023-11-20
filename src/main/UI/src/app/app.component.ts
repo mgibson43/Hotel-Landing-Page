@@ -22,6 +22,7 @@ export class AppComponent implements OnInit{
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
   private welcomeUrl:string = this.baseURL + '/api/welcome';
+  private timeZoneUrl:string = this.baseURL + '/api/timezone';
   public submitted!:boolean;
   roomsearch! : FormGroup;
   rooms! : Room[];
@@ -29,9 +30,14 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   welcomeMessages!:string[];
+  timeZones!:string[];
 
   getWelcome(): Observable<string> {
     return this.httpClient.get(this.welcomeUrl,{responseType:'text'});
+  }
+
+  getTimeZone(): Observable<string> {
+    return this.httpClient.get(this.timeZoneUrl, {responseType:'text'});
   }
 
     ngOnInit(){
@@ -55,7 +61,13 @@ export class AppComponent implements OnInit{
       (response) => {
         this.welcomeMessages = JSON.parse(response);
       }
-    )
+    );
+
+    this.getTimeZone().subscribe(
+      (response) => {
+        this.timeZones = JSON.parse(response);
+      }
+    );
   }
 
 
