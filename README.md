@@ -41,4 +41,4 @@
 - TimeZoneController.java - lines 23-27: pass JSON of date times to front end through get mapping
 <br><br>
 - app.component.ts - lines 39-41: retrieve date time data from GET method
-- app.component.ts - lines 66-70: subscribe time zone data to string array
+- app.component.ts - lines 66-74: convert timestamps to JS Date objects and subscribe them to the timeZone array
