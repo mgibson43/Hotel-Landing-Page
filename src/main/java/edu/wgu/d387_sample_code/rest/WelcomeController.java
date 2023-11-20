@@ -1,6 +1,7 @@
-package edu.wgu.d387_sample_code.d387;
+package edu.wgu.d387_sample_code.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.wgu.d387_sample_code.convertor.WelcomeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
