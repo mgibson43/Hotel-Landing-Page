@@ -26,3 +26,6 @@
 - app.component.ts - line 54-58: parse json string from get request into a javascript array
 <br><br>
 - app.component.html - line 19: use *ngFor to iterate through messages array and display each message
+
+### Task B2
+- app.component.html - lines 81-82: added prices in Canadian dollars and Euros
