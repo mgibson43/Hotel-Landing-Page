@@ -30,7 +30,9 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   welcomeMessages!:string[];
-  timeZones:Date[] = [];
+  eastern!:Date;
+  mountain!:Date;
+  utc!:Date;
 
   getWelcome(): Observable<string> {
     return this.httpClient.get(this.welcomeUrl,{responseType:'text'});
@@ -66,10 +68,9 @@ export class AppComponent implements OnInit{
     this.getTimeZone().subscribe(
       (response) => {
         const timestamps:number[] = JSON.parse(response);
-        timestamps.forEach(timestamp => {
-          this.timeZones.push(new Date(timestamp * 1000));
-        });
-        console.log(this.timeZones);
+        this.eastern = new Date(timestamps[0] * 1000);
+        this.mountain = new Date(timestamps[1] * 1000);
+        this.utc = new Date(timestamps[2] * 1000);
       }
     );
   }

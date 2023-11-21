@@ -25,7 +25,12 @@
   <div class="scene" id="welcome">
     <article class="content">
 
-
+      <div class="mb-5">
+        <h3 class="mb-2 date">Landon Hotel live presentation on <br/>{{eastern | date:'longDate'}} at:</h3>
+        <span class="time">ET: {{eastern | date:'shortTime'}} </span>
+        <span class="time">MT: {{mountain | date:'shortTime':'UTC-0900'}} </span>
+        <span class="time">UTC: {{eastern | date:'shortTime':'UTC'}}</span>
+      </div>
 
       <div class="row">
         <div class=""col-12>

@@ -1,6 +1,6 @@
 package edu.wgu.d387_sample_code.convertor;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -30,7 +30,9 @@ public class TimeZoneServiceImpl implements TimeZoneService {
         ZoneId mountain = ZoneId.of("US/Arizona");
         ZoneId utc = ZoneId.of("UTC");
 
+
         LocalDateTime localDateTime = LocalDateTime.now();
+
 
         ZonedDateTime zonedDateTime = (localDateTime.atZone(eastern));
         this.times.add(zonedDateTime);
