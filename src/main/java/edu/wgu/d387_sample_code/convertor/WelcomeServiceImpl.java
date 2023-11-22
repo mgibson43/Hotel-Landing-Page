@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
 import static java.util.concurrent.Executors.newFixedThreadPool;
@@ -19,12 +20,16 @@ public class WelcomeServiceImpl extends Thread implements WelcomeService {
 
     private List<String> messages;
     private ExecutorService executer = newFixedThreadPool(2);
+    private final CountDownLatch latch = new CountDownLatch(1);
 
     @Override
-    public String getJsonList() throws JsonProcessingException {
+    public String getJsonList() throws JsonProcessingException, InterruptedException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this.messages);
+        latch.await();
+        synchronized (this) {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(this.messages);
+        }
     }
 
     public void startService() {
@@ -37,24 +42,29 @@ public class WelcomeServiceImpl extends Thread implements WelcomeService {
 
         Properties properties = new Properties();
         this.messages = new ArrayList<>();
-        executer.execute(() -> {
-            try {
-                InputStream stream = new ClassPathResource("welcome_en_US.properties").getInputStream();
-                properties.load(stream);
-                this.messages.add(properties.getProperty("welcome"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
-        executer.execute(() -> {
-            try {
-                InputStream stream = new ClassPathResource("welcome_fr_CA.properties").getInputStream();
-                properties.load(stream);
-                this.messages.add(properties.getProperty("welcome"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        synchronized (this) {
+
+            executer.execute(() -> {
+                try {
+                    InputStream stream = new ClassPathResource("welcome_en_US.properties").getInputStream();
+                    properties.load(stream);
+                    this.messages.add(properties.getProperty("welcome"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            executer.execute(() -> {
+                try {
+                    InputStream stream = new ClassPathResource("welcome_fr_CA.properties").getInputStream();
+                    properties.load(stream);
+                    this.messages.add(properties.getProperty("welcome"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            latch.countDown();
+        }
     }
 }

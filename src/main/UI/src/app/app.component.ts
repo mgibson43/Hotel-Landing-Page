@@ -29,13 +29,13 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
-  welcomeMessages!:string[];
+  welcomeMessages:string[] = [];
   eastern!:Date;
   mountain!:Date;
   utc!:Date;
 
   getWelcome(): Observable<string> {
-    return this.httpClient.get(this.welcomeUrl,{responseType:'text'});
+    return this.httpClient.get<string>(this.welcomeUrl,{responseType:'text' as 'json'});
   }
 
   getTimeZone(): Observable<string> {
