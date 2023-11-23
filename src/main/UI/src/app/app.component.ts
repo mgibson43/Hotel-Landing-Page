@@ -29,10 +29,8 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
-  welcomeMessages:string[] = [];
-  eastern!:Date;
-  mountain!:Date;
-  utc!:Date;
+  welcomeMessages!:string[];
+  timeZones!:string[];
 
   getWelcome(): Observable<string> {
     return this.httpClient.get<string>(this.welcomeUrl,{responseType:'text' as 'json'});
@@ -67,10 +65,7 @@ export class AppComponent implements OnInit{
 
     this.getTimeZone().subscribe(
       (response) => {
-        const timestamps:number[] = JSON.parse(response);
-        this.eastern = new Date(timestamps[0] * 1000);
-        this.mountain = new Date(timestamps[1] * 1000);
-        this.utc = new Date(timestamps[2] * 1000);
+        this.timeZones = JSON.parse(response);
       }
     );
   }

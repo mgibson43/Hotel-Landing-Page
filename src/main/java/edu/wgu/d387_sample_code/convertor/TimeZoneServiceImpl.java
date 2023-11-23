@@ -3,6 +3,7 @@ package edu.wgu.d387_sample_code.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import java.util.List;
 @Getter
 public class TimeZoneServiceImpl implements TimeZoneService {
 
-    private List<ZonedDateTime> times;
+    private List<LocalDateTime> times;
 
     @Override
     public void addTimeZones() {
@@ -27,19 +28,24 @@ public class TimeZoneServiceImpl implements TimeZoneService {
         this.times = new ArrayList<>();
 
         ZoneId eastern = ZoneId.of("America/New_York");
-        ZoneId mountain = ZoneId.of("US/Arizona");
+        ZoneId mountain = ZoneId.of("America/Denver");
         ZoneId utc = ZoneId.of("UTC");
-
+        ZoneId zoneId = ZoneId.systemDefault();
 
         LocalDateTime localDateTime = LocalDateTime.now();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
 
+        ZonedDateTime easternZone = zonedDateTime.withZoneSameInstant(eastern);
+        LocalDateTime easternLocal = easternZone.toLocalDateTime();
+        this.times.add(easternLocal);
 
-        ZonedDateTime zonedDateTime = (localDateTime.atZone(eastern));
-        this.times.add(zonedDateTime);
-        zonedDateTime = (localDateTime.atZone(mountain));
-        this.times.add(zonedDateTime);
-        zonedDateTime = (localDateTime.atZone(utc));
-        this.times.add(zonedDateTime);
+        ZonedDateTime mountainZone = zonedDateTime.withZoneSameInstant(mountain);
+        LocalDateTime mountainLocal = mountainZone.toLocalDateTime();
+        this.times.add(mountainLocal);
+
+        ZonedDateTime utcZone = zonedDateTime.withZoneSameInstant(utc);
+        LocalDateTime utcLocal = utcZone.toLocalDateTime();
+        this.times.add(utcLocal);
     }
 
     @Override
@@ -47,6 +53,7 @@ public class TimeZoneServiceImpl implements TimeZoneService {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return mapper.writeValueAsString(this.times);
     }
 }

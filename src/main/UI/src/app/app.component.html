@@ -26,10 +26,10 @@
     <article class="content">
 
       <div class="mb-5">
-        <h3 class="mb-2 date">Landon Hotel live presentation on <br/>{{eastern | date:'longDate'}} at:</h3>
-        <span class="time">ET: {{eastern | date:'shortTime'}} </span>
-        <span class="time">MT: {{mountain | date:'shortTime':'UTC-0900'}} </span>
-        <span class="time">UTC: {{eastern | date:'shortTime':'UTC'}}</span>
+        <h3 class="mb-2 date">Landon Hotel live presentation on <br/>{{timeZones[0] | date: 'longDate'}} at:</h3>
+        <span class="time">ET: {{timeZones[0] | date:'shortTime'}} </span>
+        <span class="time">MT: {{timeZones[1] | date:'shortTime'}} </span>
+        <span class="time">UTC: {{timeZones[2] | date:'shortTime'}} </span>
       </div>
 
       <div class="row">
