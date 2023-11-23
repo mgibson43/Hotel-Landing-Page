@@ -43,3 +43,7 @@
 - app.component.ts - lines 39-41: retrieve date time data from GET method
 <br><br>
 - app.component.html - lines 28-33: format dates to proper timezones and display date and times
+
+### Task C1
+- edu.wgu.d387_sample_code: created Dockerfile
+- pom.xml - lines 124-149: added fabric8 plugin for docker

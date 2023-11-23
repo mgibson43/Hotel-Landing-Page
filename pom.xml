@@ -121,6 +121,32 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.43.4</version>
+
+				<configuration>
+
+					<dockerHost>tcp://localhost:2375</dockerHost>
+					<images>
+						<image>
+							<name>d387:latest</name>
+							<build>
+								<dockerFileDir>${project.basedir}</dockerFileDir>
+
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
